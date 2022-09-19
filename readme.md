@@ -26,13 +26,13 @@ Android EGL的架构图如下：
 
 ### 1.EGL 环境创建
 
-EGL 环境创建主要是操作 EGLDisplay、EGLSurface 和 EGLContext。一般步骤如下：
+EGL 环境创建主要是操作 ``EGLDisplay``、``EGLSurface`` 和 ``EGLContext``。一般步骤如下：
 
 1. 使用``eglGetDisplay(EGL_DEFAULT_DISPLAY)``获取 EGLDisplay，并调用``eglInitialize``方法执行初始化，**建立起与本地窗口系统的连接**。
 
 2. 调用``eglChooseConfig``方法，确定渲染表面的配置信息。
 
-3. 创建 EGLContext：``eglCreateContext``。
+3. 创建 ``EGLContext``：``eglCreateContext``。
 
 4. 使用 ``ANativeWindow`` 创建 ``EGLSurface``。
 
@@ -46,8 +46,8 @@ EGL 环境创建主要是操作 EGLDisplay、EGLSurface 和 EGLContext。一般�
 
 实现思路：在Java层封装了``NativeRenderer``类，用于处理与Native层的交互以及兼容``SurfaceView``和``TextureView``，并使用了一个``HandlerThread``来做渲染线程。借助``Choreographer``将每帧的回调传递到了Native，实现类似于``View.onDraw``方法。
 
-从``SurfaceView``和``TextureView``获取的 Surface 非常重要，从 Surface 获取 ANativeWindow 才能完成这两个 View 与 EGL 环境的绑定。具体参考：[EGLSurface 和 OpenGL ES](https://source.android.com/docs/core/graphics/arch-egl-opengl)。
+从``SurfaceView``和``TextureView``获取的 Surface 非常重要，从 Surface 获取 ``ANativeWindow`` 才能完成这两个 View 与 EGL 环境的绑定。具体参考：[EGLSurface 和 OpenGL ES](https://source.android.com/docs/core/graphics/arch-egl-opengl)。
 
-EGLHelper 参考了 GLSurfaceView.EglHelper 的实现，完成了 EGL 环境创建。
+``EGLHelper`` 参考了 ``GLSurfaceView.EglHelper`` 的实现，完成了 EGL 环境创建。
 
 参考文档：[OpenGL ES 共享上下文实现多线程渲染 - 掘金](https://juejin.cn/post/6969580005151997989)。
