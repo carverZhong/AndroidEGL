@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 3.4.1)
+
+include_directories(
+        native_renderer.h
+        egl_helper.h
+        logcat.h
+        triangle_renderer.h
+)
+
+add_library(and_egl
+        SHARED
+        native_renderer.cpp
+        jni_bridge.cpp
+        egl_helper.cpp
+        triangle_renderer.cpp
+        )
+
+find_library(
+        log-lib
+        log
+)
+
+target_link_libraries( # Specifies the target library.
+        and_egl
+        ${log-lib}
+        android
+        jnigraphics
+        EGL
+        GLESv3)
